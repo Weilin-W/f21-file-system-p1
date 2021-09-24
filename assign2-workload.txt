@@ -1,0 +1,223 @@
+assign2/penn-state.txt WRITE 177 0 :EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+assign2/penn-state.txt WRITE 72 0 :ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+assign2/penn-state.txt WRITE 91 0 :lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll
+assign2/penn-state.txt WRITE 140 0 :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+assign2/penn-state.txt WRITE 32 0 :dddddddddddddddddddddddddddddddd
+assign2/penn-state.txt WRITE 213 0 :EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+assign2/penn-state.txt WRITE 141 0 :000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+assign2/penn-state.txt WRITE 45 0 :rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+assign2/penn-state.txt SEEK 0 361 :
+assign2/penn-state.txt SEEK 0 847 :
+assign2/penn-state.txt READ 64 0 :
+assign2/penn-state.txt SEEK 0 111 :
+assign2/penn-state.txt WRITE 226 0 :WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+assign2/penn-state.txt WRITE 57 0 :HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+assign2/penn-state.txt SEEK 0 860 :
+assign2/penn-state.txt WRITE 51 0 :rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+assign2/penn-state.txt SEEK 0 295 :
+assign2/penn-state.txt SEEK 0 908 :
+assign2/penn-state.txt WRITE 3 0 :HHH
+assign2/penn-state.txt SEEK 0 734 :
+assign2/penn-state.txt WRITE 81 0 :HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+assign2/penn-state.txt WRITE 96 0 :MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+assign2/penn-state.txt SEEK 0 366 :
+assign2/penn-state.txt WRITE 111 0 :SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+assign2/penn-state.txt SEEK 0 598 :
+assign2/penn-state.txt SEEK 0 388 :
+assign2/penn-state.txt WRITE 248 0 :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+assign2/penn-state.txt SEEK 0 559 :
+assign2/penn-state.txt READ 109 0 :
+assign2/penn-state.txt SEEK 0 18 :
+assign2/penn-state.txt READ 88 0 :
+assign2/penn-state.txt WRITE 184 0 :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+assign2/penn-state.txt SEEK 0 21 :
+assign2/penn-state.txt WRITE 201 0 :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+assign2/penn-state.txt SEEK 0 701 :
+assign2/penn-state.txt SEEK 0 40 :
+assign2/penn-state.txt READ 105 0 :
+assign2/penn-state.txt READ 7 0 :
+assign2/penn-state.txt READ 197 0 :
+assign2/penn-state.txt READ 221 0 :
+assign2/penn-state.txt SEEK 0 41 :
+assign2/penn-state.txt SEEK 0 569 :
+assign2/penn-state.txt SEEK 0 545 :
+assign2/penn-state.txt SEEK 0 416 :
+assign2/penn-state.txt READ 79 0 :
+assign2/penn-state.txt READ 234 0 :
+assign2/penn-state.txt READ 127 0 :
+assign2/penn-state.txt WRITE 55 0 :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+assign2/penn-state.txt SEEK 0 287 :
+assign2/penn-state.txt SEEK 0 618 :
+assign2/penn-state.txt READ 117 0 :
+assign2/penn-state.txt READ 15 0 :
+assign2/penn-state.txt WRITE 161 0 :ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+assign2/penn-state.txt SEEK 0 902 :
+assign2/penn-state.txt SEEK 0 369 :
+assign2/penn-state.txt READ 71 0 :
+assign2/penn-state.txt SEEK 0 360 :
+assign2/penn-state.txt WRITE 9 0 :ggggggggg
+assign2/penn-state.txt WRITE 223 0 :ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+assign2/penn-state.txt READ 97 0 :
+assign2/penn-state.txt SEEK 0 446 :
+assign2/penn-state.txt SEEK 0 477 :
+assign2/penn-state.txt WRITE 50 0 :WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+assign2/penn-state.txt SEEK 0 836 :
+assign2/penn-state.txt SEEK 0 397 :
+assign2/penn-state.txt SEEK 0 162 :
+assign2/penn-state.txt SEEK 0 240 :
+assign2/penn-state.txt WRITE 88 0 :1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+assign2/penn-state.txt SEEK 0 353 :
+assign2/penn-state.txt SEEK 0 249 :
+assign2/penn-state.txt SEEK 0 429 :
+assign2/penn-state.txt READ 42 0 :
+assign2/penn-state.txt SEEK 0 231 :
+assign2/penn-state.txt READ 98 0 :
+assign2/penn-state.txt SEEK 0 44 :
+assign2/penn-state.txt WRITE 1 0 :f
+assign2/penn-state.txt SEEK 0 23 :
+assign2/penn-state.txt SEEK 0 685 :
+assign2/penn-state.txt WRITE 124 0 :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+assign2/penn-state.txt WRITE 102 0 :wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+assign2/penn-state.txt SEEK 0 259 :
+assign2/penn-state.txt READ 167 0 :
+assign2/penn-state.txt SEEK 0 818 :
+assign2/penn-state.txt WRITE 42 0 :888888888888888888888888888888888888888888
+assign2/penn-state.txt WRITE 34 0 :wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+assign2/penn-state.txt WRITE 17 0 :SSSSSSSSSSSSSSSSS
+assign2/penn-state.txt SEEK 0 253 :
+assign2/penn-state.txt WRITE 116 0 :SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+assign2/penn-state.txt SEEK 0 583 :
+assign2/penn-state.txt SEEK 0 158 :
+assign2/penn-state.txt READ 243 0 :
+assign2/penn-state.txt READ 77 0 :
+assign2/penn-state.txt READ 57 0 :
+assign2/penn-state.txt READ 20 0 :
+assign2/penn-state.txt READ 138 0 :
+assign2/penn-state.txt WRITE 218 0 :YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+assign2/penn-state.txt SEEK 0 185 :
+assign2/penn-state.txt SEEK 0 371 :
+assign2/penn-state.txt READ 114 0 :
+assign2/penn-state.txt READ 243 0 :
+assign2/penn-state.txt WRITE 54 0 :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+assign2/penn-state.txt WRITE 98 0 :33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
+assign2/penn-state.txt READ 31 0 :
+assign2/penn-state.txt SEEK 0 359 :
+assign2/penn-state.txt READ 188 0 :
+assign2/penn-state.txt READ 150 0 :
+assign2/penn-state.txt SEEK 0 554 :
+assign2/penn-state.txt WRITE 195 0 :ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+assign2/penn-state.txt READ 16 0 :
+assign2/penn-state.txt READ 146 0 :
+assign2/penn-state.txt WRITEAT 16 316 :ns.^^Pugh and si
+assign2/penn-state.txt WRITEAT 12 576 :e, without e
+assign2/penn-state.txt WRITEAT 4 679 :ngin
+assign2/penn-state.txt WRITEAT 4 572 :ll b
+assign2/penn-state.txt WRITEAT 16 90 :entleman farmer 
+assign2/penn-state.txt WRITEAT 8 794 :ts and p
+assign2/penn-state.txt WRITEAT 8 607 : and cla
+assign2/penn-state.txt WRITEAT 8 254 :um that 
+assign2/penn-state.txt WRITEAT 16 300 :tical^applicatio
+assign2/penn-state.txt WRITEAT 13 0 :Centre County
+assign2/penn-state.txt WRITEAT 4 877 :rant
+assign2/penn-state.txt WRITEAT 16 50 :n response to a 
+assign2/penn-state.txt WRITEAT 12 627 :es ...^to te
+assign2/penn-state.txt WRITEAT 13 882 :institution o
+assign2/penn-state.txt WRITEAT 13 496 :oceeds, and u
+assign2/penn-state.txt WRITEAT 8 594 :ng scien
+assign2/penn-state.txt WRITEAT 3 520 :me 
+assign2/penn-state.txt WRITEAT 1 175 :h
+assign2/penn-state.txt WRITEAT 2 518 :co
+assign2/penn-state.txt WRITEAT 1 112 :o
+assign2/penn-state.txt WRITEAT 5 854 :d Pen
+assign2/penn-state.txt WRITEAT 2 859 :n^
+assign2/penn-state.txt WRITEAT 6 433 :862. T
+assign2/penn-state.txt WRITEAT 16 219 :ceived in Europe
+assign2/penn-state.txt WRITEAT 4 683 :eeri
+assign2/penn-state.txt WRITEAT 7 32 : the ne
+assign2/penn-state.txt WRITEAT 4 83 : fro
+assign2/penn-state.txt WRITEAT 15 275 :retical studies
+assign2/penn-state.txt WRITEAT 16 356 :er states champi
+assign2/penn-state.txt WRITEAT 3 439 :he 
+assign2/penn-state.txt WRITEAT 2 30 :of
+assign2/penn-state.txt WRITEAT 4 213 :had 
+assign2/penn-state.txt WRITEAT 11 39 :w college i
+assign2/penn-state.txt WRITEAT 9 509 :se the in
+assign2/penn-state.txt WRITEAT 10 332 :milar visi
+assign2/penn-state.txt WRITEAT 1 881 : 
+assign2/penn-state.txt WRITEAT 4 141 :font
+assign2/penn-state.txt WRITEAT 6 553 :^leadi
+assign2/penn-state.txt WRITEAT 6 566 :ct sha
+assign2/penn-state.txt WRITEAT 6 621 : studi
+assign2/penn-state.txt WRITEAT 14 120 : James Irvin o
+assign2/penn-state.txt WRITEAT 14 639 :ach agricultur
+assign2/penn-state.txt WRITEAT 5 561 : obje
+assign2/penn-state.txt WRITEAT 9 802 :rofession
+assign2/penn-state.txt WRITEAT 7 247 :urricul
+assign2/penn-state.txt WRITEAT 14 780 :all^the pursui
+assign2/penn-state.txt WRITEAT 5 895 :f Pen
+assign2/penn-state.txt WRITEAT 16 687 :ng] ... in order
+assign2/penn-state.txt WRITEAT 13 449 :bled states t
+assign2/penn-state.txt WRITEAT 6 169 :an Pug
+assign2/penn-state.txt WRITEAT 5 290 : with
+assign2/penn-state.txt WRITEAT 15 523 :to support coll
+assign2/penn-state.txt WRITEAT 9 462 :o sell fe
+assign2/penn-state.txt WRITEAT 3 703 : to
+assign2/penn-state.txt WRITEAT 3 13 : be
+assign2/penn-state.txt WRITEAT 8 655 :and the 
+assign2/penn-state.txt WRITEAT 10 770 :lasses in 
+assign2/penn-state.txt WRITEAT 6 588 :xcludi
+assign2/penn-state.txt WRITEAT 16 716 :he liberal and p
+assign2/penn-state.txt WRITEAT 8 68 :ft of 20
+assign2/penn-state.txt WRITEAT 2 706 :^p
+assign2/penn-state.txt WRITEAT 2 295 : p
+assign2/penn-state.txt WRITEAT 6 269 :d theo
+assign2/penn-state.txt WRITEAT 6 106 :and ir
+assign2/penn-state.txt WRITEAT 15 195 :ific education 
+assign2/penn-state.txt WRITEAT 14 840 :ture designate
+assign2/penn-state.txt WRITEAT 8 545 :here the
+assign2/penn-state.txt WRITEAT 15 145 :e. Founding^Pre
+assign2/penn-state.txt WRITEAT 7 442 :act ena
+assign2/penn-state.txt WRITEAT 4 113 :nmas
+assign2/penn-state.txt WRITEAT 11 900 :nsylvania.^
+assign2/penn-state.txt WRITEAT 14 372 :oned Congressi
+assign2/penn-state.txt WRITEAT 3 117 :ter
+assign2/penn-state.txt WRITEAT 9 761 :ustrial c
+assign2/penn-state.txt WRITEAT 3 297 :rac
+assign2/penn-state.txt WRITEAT 4 538 :eges
+assign2/penn-state.txt WRITEAT 2 653 :e 
+assign2/penn-state.txt WRITEAT 2 217 :re
+assign2/penn-state.txt WRITEAT 14 342 :onaries in oth
+assign2/penn-state.txt WRITEAT 5 711 :ote t
+assign2/penn-state.txt WRITEAT 13 386 :onal passage^
+assign2/penn-state.txt WRITEAT 5 176 : drew
+assign2/penn-state.txt WRITEAT 6 861 :State 
+assign2/penn-state.txt WRITEAT 5 602 :tific
+assign2/penn-state.txt WRITEAT 5 426 :ct in
+assign2/penn-state.txt WRITEAT 14 742 :ducation of th
+assign2/penn-state.txt WRITEAT 2 431 : 1
+assign2/penn-state.txt WRITEAT 12 235 :^to plan a c
+assign2/penn-state.txt WRITEAT 3 210 :he 
+assign2/penn-state.txt WRITEAT 7 833 :legisla
+assign2/penn-state.txt WRITEAT 9 160 :sident Ev
+assign2/penn-state.txt WRITEAT 7 262 :combine
+assign2/penn-state.txt WRITEAT 3 542 : "w
+assign2/penn-state.txt WRITEAT 14 16 :came the site 
+assign2/penn-state.txt WRITEAT 15 481 :, invest the pr
+assign2/penn-state.txt WRITEAT 5 756 :e ind
+assign2/penn-state.txt WRITEAT 3 708 :rom
+assign2/penn-state.txt WRITEAT 7 76 :0^acres
+assign2/penn-state.txt WRITEAT 10 732 :ractical e
+assign2/penn-state.txt WRITEAT 4 867 :the 
+assign2/penn-state.txt WRITEAT 6 615 :ssical
+assign2/penn-state.txt WRITEAT 2 66 :gi
+assign2/penn-state.txt WRITEAT 3 87 :m g
+assign2/penn-state.txt WRITEAT 16 663 :mechanic arts [e
+assign2/penn-state.txt WRITEAT 10 471 :deral^land
+assign2/penn-state.txt WRITEAT 12 399 :of the Morri
+assign2/penn-state.txt WRITEAT 7 134 :f Belle
+assign2/penn-state.txt WRITEAT 14 181 : on the scient
+assign2/penn-state.txt WRITEAT 15 411 :ll Land-Grant A
+assign2/penn-state.txt WRITEAT 2 559 :ng
+assign2/penn-state.txt WRITEAT 9 811 :s of life
+assign2/penn-state.txt WRITEAT 6 871 :land-g
+assign2/penn-state.txt WRITEAT 13 820 :." The state 
