@@ -69,10 +69,10 @@ A command block is a 64-bit value that encodes arguments to the disk. The comman
 | Bits  | Register (note that top is bit 0) |
 | :---: | :-------------------------------: |
 | 0-3   | Opcode (command)                  |
-| 4-7   | Sector number                     |
-| 8-39  | Track number                      |
-| 40    | Return value                      |
-| 41-63 | UNUSED                            |
+| 4-19  | Sector number                     |
+| 20-51 | Track number                      |
+|  52   | Return value                      |
+| 53-63 | UNUSED                            |
 
 An opcode is a command type that tells the disk what you are doing.
 
@@ -99,6 +99,12 @@ To execute an opcode, create a 64 bit value (`uint64_t`) and pass it any needed 
 ```
 FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
 ```
+
+You communicate with devices though by passing a command block (`FS3CmdBlk`) and a data pointer (`buf`) to `fs3_sycall`.  The command block contains fields of different sizes that encode the opcode and arguments for the system call.  The “data” associated with the opcode (where needed) is communicated through the fixed sized transfer buffer (of size `FS3_SECTOR_SIZE`).​
+
+Additionally, `fs3_syscall` returns you the same command block `FS3CmdBlk` you passed to it during the call with some fields updated: 
+- The return value indicating you if the call you made was a success (`0`) or if an error happened (`-1`)
+- For read and write sector operations, the sector number is being updated for the new one in the command block returned by `fs3_syscall`
 
 The key thing to know about the disk is that it has a track read element.  When the device is mounted the track head is resting in a neutral position (i.e., it is not pointing at any track).  To move the track head you call the `TSEEK` operator to move it.  There after you can read any sector, one-by-one, by calling the `RDSECT` or `WRSECT` functions.  When you are done you call the `UMOUNT` operator.
 
