@@ -14,7 +14,7 @@
 
 // Project Includes
 #include <fs3_driver.h>
-
+#include <fs3_controller.h>
 //
 // Defines
 #define SECTOR_INDEX_NUMBER(x) ((int)(x/FS3_SECTOR_SIZE))
@@ -28,20 +28,26 @@
 
 
 //FS#CmdBlk Implementation: construct fs3
-FS3CmdBlk construct_fs3_cmdblock(uint8_t op, uint16_t sec, uint_fast32_t trk, uint8_t ret);
+FS3CmdBlk construct_fs3_cmdblock(uint8_t op, uint16_t sec, uint_fast32_t trk, uint8_t ret){
 	// create FS3 array opcode from the variable fields
-	uint8_t op >> 56;
-	uint16_t sec >> 40;
-	uint_fast32_t trk >> 8;
-	uint8_t ret >> 0;
-	
-int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uint32_t *trk, uint8_t *ret);
+	uint64_t x;
+	op = (x >> 60) >> op;
+	sec = (x >> 44) >> sec;
+	trk = (trk >> 12);
+	ret = (x >> 11) >> ret;
+	cmdblock = op | sec | trk | ret;
+	return cmdblock;
+}
+int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uint32_t *trk, uint8_t *ret){
 	// extract register state from bus values
-	uint8_t op << 56;
-	uint16_t sec << 40;
-	uint_fast32_t trk << 8;
-	uint8_t ret << 0;
-	exit();
+	uint64_t y;
+	op = (y << 60) << op;
+	sec = (y << 44) << sec;
+	trk = (trk << 12);
+	ret = (y << 11) << ret;
+	cmdblock = op | sec | trk | ret;
+	return cmdblock;
+}
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Function     : fs3_mount_disk

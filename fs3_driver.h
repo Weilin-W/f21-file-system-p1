@@ -13,13 +13,16 @@
 
 // Include files
 #include <stdint.h>
-
+#include <fs3_controller.h>
 // Defines
 #define FS3_MAX_TOTAL_FILES 1024 // Maximum number of files ever
 #define FS3_MAX_PATH_LENGTH 128 // Maximum length of filename length
 
 //
 // Interface functions
+FS3CmdBlk construct_fs3_cmdblock(uint8_t op, uint16_t sec, uint_fast32_t trk, uint8_t ret);
+
+int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uint32_t *trk, uint8_t *ret);
 
 int32_t fs3_mount_disk(void);
 	// FS3 interface, mount/initialize filesystem
