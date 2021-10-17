@@ -30,23 +30,13 @@
 //FS#CmdBlk Implementation: construct fs3
 FS3CmdBlk construct_fs3_cmdblock(uint8_t op, uint16_t sec, uint_fast32_t trk, uint8_t ret){
 	// create FS3 array opcode from the variable fields
-	uint64_t x;
-	op = (x >> 60) >> op;
-	sec = (x >> 44) >> sec;
-	trk = (trk >> 12);
-	ret = (x >> 11) >> ret;
-	cmdblock = op | sec | trk | ret;
-	return cmdblock;
+	FS3CmdBlk CmdBlk = (uint64_t)op << 60|(uint64_t)sec << 44|(uint64_t)trk << 12;
+	return CmdBlk;
 }
 int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uint32_t *trk, uint8_t *ret){
 	// extract register state from bus values
-	uint64_t y;
-	op = (y << 60) << op;
-	sec = (y << 44) << sec;
-	trk = (trk << 12);
-	ret = (y << 11) << ret;
-	cmdblock = op | sec | trk | ret;
-	return cmdblock;
+	FS3CmdBlk CmdBlk = (uint64_t)op >> 60|(uint64_t)sec >> 44|(uint64_t)trk >> 12;
+	return CmdBlk;
 }
 ////////////////////////////////////////////////////////////////////////////////
 //
