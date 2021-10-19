@@ -30,13 +30,15 @@
 //FS#CmdBlk Implementation: construct fs3
 FS3CmdBlk construct_fs3_cmdblock(uint8_t op, uint16_t sec, uint_fast32_t trk, uint8_t ret){
 	// create FS3 array opcode from the variable fields
-	FS3CmdBlk CmdBlk = (uint64_t)op << 60|(uint64_t)sec << 44|(uint64_t)trk << 12;
+	FS3CmdBlk CmdBlk = (uint64_t)op << 60|(uint64_t)sec << 44|(uint64_t)trk << 12|(uint64_t)ret << 11;
 	return CmdBlk;
 }
 int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uint32_t *trk, uint8_t *ret){
 	// extract register state from bus values
-	FS3CmdBlk CmdBlk = (uint64_t)op >> 60|(uint64_t)sec >> 44|(uint64_t)trk >> 12;
-	return CmdBlk;
+	*op = cmdblock >> 60;
+	*sec = cmdblock >> 44;
+	*trk = cmdblock >> 12;
+	return *ret;
 }
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -47,9 +49,15 @@ int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uin
 // Outputs      : 0 if successful, -1 if failure
 
 int32_t fs3_mount_disk(void) {
-	FS3CmdBlk fs3_sycall(FS3CmdBlk construct_fs3_cmdblock(), void *buf);
-	
-	return(0);
+	uint16_t sec = 0;
+	uint_fast32_t trk = 0;
+	uint8_t ret = 0;
+	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret), NULL);
+	if(deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock,uint8_t FS3_OP_MOUNT,uint16_t sec,uint32_t trk, uint8_t ret) == 0){
+		return(0);
+	}
+	return(-1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
