@@ -86,6 +86,14 @@ int32_t fs3_unmount_disk(void) {
 // Outputs      : file handle if successful, -1 if failure
 
 int16_t fs3_open(char *path) {
+	if(path == NULL){
+		path = new(path);
+		int pathlength = 0;
+	}
+	else{
+		fs3_read(path,*buf,1);
+		fs3_write(path,*buf,1);
+	}
 	return (0); // Likely wrong
 }
 
