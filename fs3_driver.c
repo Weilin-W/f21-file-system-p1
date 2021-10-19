@@ -47,7 +47,7 @@ int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uin
 // Outputs      : 0 if successful, -1 if failure
 
 int32_t fs3_mount_disk(void) {
-	FS3CmdBlk fs3_sycall(FS3CmdBlk cmdblock, void *buf);
+	FS3CmdBlk fs3_sycall(FS3CmdBlk construct_fs3_cmdblock(), void *buf);
 	
 	return(0);
 }
@@ -61,6 +61,8 @@ int32_t fs3_mount_disk(void) {
 // Outputs      : 0 if successful, -1 if failure
 
 int32_t fs3_unmount_disk(void) {
+	FS3CmdBlk fs3_sycall(FS3CmdBlk deconstruct_fs3_cmdblock(), void *buf);
+
 	return(0);
 }
 
