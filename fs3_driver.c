@@ -54,10 +54,13 @@ int32_t fs3_mount_disk(void) {
 	uint8_t ret = 0;
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
 	fs3_syscall(construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret), NULL);
+
+
+	/*printf("Break line----------");    ATTENTION: Checker for if deconstruct equals 0
 	if(deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock,uint8_t FS3_OP_MOUNT,uint16_t sec,uint32_t trk, uint8_t ret) == 0){
 		return(0);
-	}
-	return(-1);
+	}*/
+	return(0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
