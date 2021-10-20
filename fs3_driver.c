@@ -21,12 +21,14 @@
 
 //
 // Static Global Variables
-typedef struct Files{
-	char filename[50];
-	int handler;
+typedef struct TFiles{
+	char fname;
 	int length;
-} file;
-
+	int trk;
+	int sect;
+} files;
+//File array with sector 64 and track 1024
+files farray[64][1024];
 //
 // Implementation
 
@@ -77,7 +79,11 @@ int32_t fs3_mount_disk(void) {
 // Outputs      : 0 if successful, -1 if failure
 
 int32_t fs3_unmount_disk(void) {
-	FS3CmdBlk fs3_sycall(FS3CmdBlk deconstruct_fs3_cmdblock(), void *buf);
+	uint16_t sec = 0;
+	uint32_t trk = 0;
+	uint8_t ret = 0;
+	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+	fs3_syscall(deconstruct_fs3_cmdblock(FS3_OP_UMOUNT,sec,trk,ret), NULL);
 
 	return(0);
 }
@@ -98,17 +104,9 @@ int16_t fs3_open(char *path) {
 
 		int handle "Use handle to pass info"
 	}*/
-	file file;
-	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	int filepath = path;
+	int filepath = &path;
 	if(filepath == NULL){
-		strcpy(file.filename, "new_file");
-		file.handler = 1;
 		file.length = 0;
-	}
-	else{
-		fs3_syscall(fs3_read(FS3_OP_RDSECT,1,FS3_SECTOR_SIZE),void *buf);
-		fs3_syscall(fs3_write(FS3_OP_WRSECT,1,FS3_SECTOR_SIZE),void *buf);
 	}
 	return (0); // Likely wrong
 }
