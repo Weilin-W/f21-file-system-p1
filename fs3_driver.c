@@ -21,9 +21,11 @@
 
 //
 // Static Global Variables
-typedef Struc Global filename;
-typedef Struc Global handler;
-typedef Struc Global length;
+typedef struct Files{
+	char filename[50];
+	int handler;
+	int length;
+} file;
 
 //
 // Implementation
@@ -96,15 +98,17 @@ int16_t fs3_open(char *path) {
 
 		int handle "Use handle to pass info"
 	}*/
+	file file;
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	int handler;
-	if(*path == NULL){
-		handler = 1;
-		length = 0;
+	int filepath = path;
+	if(filepath == NULL){
+		strcpy(file.filename, "new_file");
+		file.handler = 1;
+		file.length = 0;
 	}
 	else{
-		fs3_read(FS3_OP_RDSECT,*buf,FS3_SECTOR_SIZE);
-		fs3_write(FS3_OP_WRSECT,*buf,FS3_SECTOR_SIZE);
+		fs3_syscall(fs3_read(FS3_OP_RDSECT,1,FS3_SECTOR_SIZE),void *buf);
+		fs3_syscall(fs3_write(FS3_OP_WRSECT,1,FS3_SECTOR_SIZE),void *buf);
 	}
 	return (0); // Likely wrong
 }
