@@ -21,6 +21,9 @@
 
 //
 // Static Global Variables
+typedef Struc Global filename;
+typedef Struc Global handler;
+typedef Struc Global length;
 
 //
 // Implementation
@@ -86,13 +89,22 @@ int32_t fs3_unmount_disk(void) {
 // Outputs      : file handle if successful, -1 if failure
 
 int16_t fs3_open(char *path) {
-	if(path == NULL){
-		path = new(path);
-		int pathlength = 0;
+	/*Struc{
+		length of the file
+		int sectors[][]
+		choose sectors and files
+
+		int handle "Use handle to pass info"
+	}*/
+	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+	int handler;
+	if(*path == NULL){
+		handler = 1;
+		length = 0;
 	}
 	else{
-		fs3_read(path,*buf,1);
-		fs3_write(path,*buf,1);
+		fs3_read(FS3_OP_RDSECT,*buf,FS3_SECTOR_SIZE);
+		fs3_write(FS3_OP_WRSECT,*buf,FS3_SECTOR_SIZE);
 	}
 	return (0); // Likely wrong
 }
@@ -121,6 +133,7 @@ int16_t fs3_close(int16_t fd) {
 // Outputs      : bytes read if successful, -1 if failure
 
 int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
+
 	return (0);
 }
 
