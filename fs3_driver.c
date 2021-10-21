@@ -65,7 +65,8 @@ int32_t fs3_mount_disk(void) {
 	uint8_t ret = 0;
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
 	fs3_syscall(construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret), NULL);
-	tfile.fileOpen = 0;
+	tfile.fileOpen = 0; //file at closed state
+	tfile.position = 0;
 
 	/*printf("Break line----------");    ATTENTION: Checker for if deconstruct equals 0
 	if(deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock,uint8_t FS3_OP_MOUNT,uint16_t sec,uint32_t trk, uint8_t ret) == 0){
@@ -147,7 +148,7 @@ int16_t fs3_open(char *path) {
 		tfile.fileOpen = 1;
 	}
 
-	return (tfile.handler); // Likely wrong
+	return (tfile.handler);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -182,15 +183,15 @@ int16_t fs3_close(int16_t fd) {
 // Outputs      : bytes read if successful, -1 if failure
 
 int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
-	uint16_t sec = fd;
+	uint16_t sec = 0; //read sect?
 	uint32_t trk = 0;
 	uint8_t ret = 0;
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), NULL);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), NULL); //buffer, why null?
 	char buffer[1024];
 	//memcpy(des,source,count);
-	memcpy(buffer,buf,count);
-	return(buffer[1]);
+	memcpy(buffer,buf,count); //question**********
+	return(sizeof(buffer)); //return? python [0:Count] to C
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -205,14 +206,14 @@ int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
 // Outputs      : bytes written if successful, -1 if failure
 
 int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
-	uint16_t sec = fd;
+	uint16_t sec = 0;  //sec?
 	uint32_t trk = 0;
 	uint8_t ret = 0;
 	
 	char buffer[1024];
-	memcpy(buffer,buf,count);
+	memcpy(buffer,buf,count); //question
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret),NULL);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret),NULL); //?
 	if(tfile.length == count){
 		return count;
 	}
@@ -233,5 +234,6 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 
 int32_t fs3_seek(int16_t fd, uint32_t loc) {
 	//change the position of file
+
 	return (0);
 }
