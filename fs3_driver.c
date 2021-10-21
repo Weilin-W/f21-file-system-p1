@@ -154,8 +154,15 @@ int16_t fs3_close(int16_t fd) {
 // Outputs      : bytes read if successful, -1 if failure
 
 int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
-
-	return (0);
+	uint16_t sec = fd;
+	uint32_t trk = 0;
+	uint8_t ret = 0;
+	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret),*buf);
+	for (int i=0; i <= count; i++){
+		buffer = &buf;
+	}
+	return(buffer);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
