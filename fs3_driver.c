@@ -26,9 +26,9 @@ typedef struct TFiles{
 	int length;
 	int trk;
 	int sect;
-} files;
+} tfile;
 //File array with sector 64 and track 1024
-files farray[64][1024];
+tfile farray[64][1024];
 //
 // Implementation
 
@@ -83,7 +83,7 @@ int32_t fs3_unmount_disk(void) {
 	uint32_t trk = 0;
 	uint8_t ret = 0;
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(deconstruct_fs3_cmdblock(FS3_OP_UMOUNT,sec,trk,ret), NULL);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_UMOUNT,sec,trk,ret), NULL);
 
 	return(0);
 }
@@ -104,10 +104,12 @@ int16_t fs3_open(char *path) {
 
 		int handle "Use handle to pass info"
 	}*/
-	int filepath = &path;
-	if(filepath == NULL){
-		file.length = 0;
-	}
+	tfile tfile;
+	printf("file: %p", path);
+	/*int filepath = path;
+	if(filepath = NULL){
+		tfile.length = 0;
+	}*/
 	return (0); // Likely wrong
 }
 
