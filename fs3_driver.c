@@ -28,9 +28,11 @@ typedef struct TFiles{
 	int sect;
 	int fileOpen;
 	int handler;
-} tfile;
+	int position;
+}TFiles;
 //File array with sector 64 and track 1024
-tfile farray[64][1024];
+TFiles farray[64][1024];
+TFiles tfile;
 //
 // Implementation
 
@@ -63,7 +65,7 @@ int32_t fs3_mount_disk(void) {
 	uint8_t ret = 0;
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
 	fs3_syscall(construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret), NULL);
-
+	tfile.fileOpen = 0;
 
 	/*printf("Break line----------");    ATTENTION: Checker for if deconstruct equals 0
 	if(deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock,uint8_t FS3_OP_MOUNT,uint16_t sec,uint32_t trk, uint8_t ret) == 0){
@@ -106,6 +108,7 @@ int16_t fs3_open(char *path) {
 
 		int handle "Use handle to pass info"
 	}*/
+	/*
 	tfile Tfile;
 	for(int i = 0; i < FS3_MAX_TRACKS-1; i++){
 		for (int j = 0; j < FS3_SECTOR_SIZE; j++){
@@ -122,12 +125,29 @@ int16_t fs3_open(char *path) {
 			}
 		}
 	}
-	printf("file: %p", path);
+	typedef struct TFiles{
+	char fname;
+	int length;
+	int trk;
+	int sect;
+	int fileOpen;
+	int handler;
+}
+	*/
 	/*int filepath = path;
 	if(filepath = NULL){
 		tfile.length = 0;
 	}*/
-	return (0); // Likely wrong
+	if (tfile.fileOpen == 1){
+		return(-1);
+	}
+	else{
+		tfile.handler = 1;
+		tfile.position = 0;
+		tfile.fileOpen = 1;
+	}
+
+	return (tfile.handler); // Likely wrong
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -139,6 +159,14 @@ int16_t fs3_open(char *path) {
 // Outputs      : 0 if successful, -1 if failure
 
 int16_t fs3_close(int16_t fd) {
+	//check if file already closed
+	if(tfile.fileOpen == 0){
+		return -1;
+	}
+	else{
+		//close the file
+		tfile.fileOpen = 0; 
+	}
 	return (0);
 }
 
@@ -158,11 +186,10 @@ int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
 	uint32_t trk = 0;
 	uint8_t ret = 0;
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret),*buf);
-	for (int i=0; i <= count; i++){
-		buffer = &buf;
-	}
-	return(buffer);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), void &buf);
+	char buffer[1024];
+	memcpy(buffer,&buf,count);
+	return(buffer[1]);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -177,6 +204,9 @@ int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
 // Outputs      : bytes written if successful, -1 if failure
 
 int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
+	//memcpy
+	//syscall
+	//return # of bytes
 	return (0);
 }
 
@@ -190,5 +220,6 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 // Outputs      : 0 if successful, -1 if failure
 
 int32_t fs3_seek(int16_t fd, uint32_t loc) {
+	//change the position of file
 	return (0);
 }
