@@ -186,9 +186,10 @@ int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
 	uint32_t trk = 0;
 	uint8_t ret = 0;
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), void &buf);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), void *buf);
 	char buffer[1024];
-	memcpy(buffer,&buf,count);
+	//memcpy(des,source,count);
+	memcpy(buffer,buf,count);
 	return(buffer[1]);
 }
 
