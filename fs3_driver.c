@@ -106,22 +106,22 @@ int16_t fs3_open(char *path) {
 
 		int handle "Use handle to pass info"
 	}*/
+	tfile Tfile;
 	for(int i = 0; i < FS3_MAX_TRACKS-1; i++){
-		for (int j = 0; j < FS3_MAX_SIZE-1; j++){
-			if(tfile.sector[i][j] == NULL){
+		for (int j = 0; j < FS3_SECTOR_SIZE; j++){
+			if(tfile farray[i][j] == -1){
 				//fs3_open("assign2/penn-state.txt");
-				tfile.trk = 0;
-				tfile.sec = 0
-				tfile.length = 0;
+				Tfile.trk = 0;
+				Tfile.sect = 0;
+				Tfile.length = 0;
 			}
 			else{
-				tfile.fileOpen = 1; //Boolean of open
-				tfile.trk = 0;
-				tfile.sec = 0;
+				Tfile.fileOpen = 1; //Boolean of open
+				Tfile.trk = 0;
+				Tfile.sect = 0;
 			}
 		}
 	}
-	tfile tfile;
 	printf("file: %p", path);
 	/*int filepath = path;
 	if(filepath = NULL){
