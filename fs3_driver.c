@@ -26,6 +26,8 @@ typedef struct TFiles{
 	int length;
 	int trk;
 	int sect;
+	int fileOpen;
+	int handler;
 } tfile;
 //File array with sector 64 and track 1024
 tfile farray[64][1024];
@@ -104,6 +106,21 @@ int16_t fs3_open(char *path) {
 
 		int handle "Use handle to pass info"
 	}*/
+	for(int i = 0; i < FS3_MAX_TRACKS-1; i++){
+		for (int j = 0; j < FS3_MAX_SIZE-1; j++){
+			if(tfile.sector[i][j] == NULL){
+				//fs3_open("assign2/penn-state.txt");
+				tfile.trk = 0;
+				tfile.sec = 0
+				tfile.length = 0;
+			}
+			else{
+				tfile.fileOpen = 1; //Boolean of open
+				tfile.trk = 0;
+				tfile.sec = 0;
+			}
+		}
+	}
 	tfile tfile;
 	printf("file: %p", path);
 	/*int filepath = path;
