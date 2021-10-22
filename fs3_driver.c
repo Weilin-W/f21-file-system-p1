@@ -193,10 +193,15 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 	
 	char buffer[1024];
 
-	memcpy(buffer,buf,count); //question
+	 //question
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
 	fs3_syscall(fs3_seek(fd,count), buf);
 	fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret), buf); //?
+	while(buffer > buf){
+		memcpy(buffer,buf,count);
+	}else{
+		memcpy(buffer,buf,count);
+	}
 	return count;
 	//while loop
 	//return # of bytes
