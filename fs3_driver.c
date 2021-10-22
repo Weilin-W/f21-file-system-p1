@@ -42,15 +42,16 @@ TFiles tfile;
 //FS#CmdBlk Implementation: construct fs3
 FS3CmdBlk construct_fs3_cmdblock(uint8_t op, uint16_t sec, uint_fast32_t trk, uint8_t ret){
 	// create FS3 array opcode from the variable fields
-	FS3CmdBlk CmdBlk = (uint64_t)op << 60|(uint64_t)sec << 44|(uint_fast32_t)trk << 12|(uint16_t)ret << 11;
-	return CmdBlk;
+	FS3CmdBlk cmdblock = (uint64_t)op << 60|(uint64_t)sec << 44|(uint64_t)trk << 12|(uint64_t)ret << 11;
+	return cmdblock;
 }
 int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uint32_t *trk, uint8_t *ret){
-	// extract register state from bus values
-	*op = cmdblock >> 60;
-	*sec = cmdblock >> 44;
-	*trk = cmdblock >> 12;
-	return *ret;
+	// extract register state from bus values //mask
+	*op = 0xF & (cmdblock >> 60); // 1111
+	*sec = 0xFFFF & (cmdblock >> 44); //1111 11
+	*trk = 0xFFFFFFFF & (cmdblock >> 12);
+	*ret = 0x1 & (cmdblock >> 11);
+	return 0;
 }
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -68,12 +69,12 @@ int32_t fs3_mount_disk(void) {
 	if(tfile.mountDisk >= 1){
 		return -1;
 	}else{
+		construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret);
 		FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-		fs3_syscall(construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret), NULL);
 		tfile.fileOpen = 0; //file at closed state
 		tfile.position = 0;
 	}
-	tfile.mountDisk += 1;
+	tfile.mountDisk = 1;
 	
 
 	/*printf("Break line----------");    ATTENTION: Checker for if deconstruct equals 0
@@ -95,7 +96,7 @@ int32_t fs3_unmount_disk(void) {
 	uint16_t sec = 0;
 	uint32_t trk = 0;
 	uint8_t ret = 0;
-	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, NULL);
 	fs3_syscall(construct_fs3_cmdblock(FS3_OP_UMOUNT,sec,trk,ret), NULL);
 
 	return(0);
@@ -117,12 +118,15 @@ int16_t fs3_open(char *path) {
 
 		int handle "Use handle to pass info"
 	}*/
+	//check if the file already open
 	if (tfile.fileOpen == 1){
 		return(-1);
 	}
 	else{
+		//set file handler, position to 0, set checker for file open to 1
 		tfile.handler = 1;
 		tfile.position = 0;
+		tfile.length = 0;
 		tfile.fileOpen = 1;
 	}
 
@@ -144,9 +148,9 @@ int16_t fs3_close(int16_t fd) {
 	}
 	else{
 		//close the file
-		tfile.fileOpen = 0; 
+		tfile.fileOpen = 0;
+		return (0);
 	}
-	return (0);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -167,17 +171,36 @@ int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
 		//file handle not bad, and file open
 		uint16_t sec = 0; //read sect?
 		uint32_t trk = 0;
+		uint32_t track = 23;
 		uint8_t ret = 0;
 		char buffer[1024];
-		FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-		fs3_syscall(fs3_seek(fd,count), buf);
-		fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), buf);
+		//FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+		//fs3_seek(fd,count);
+		fs3_syscall(construct_fs3_cmdblock(FS3_OP_TSEEK,sec,track,ret), NULL);
+		fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), buffer);
+		//fs3_syscall(fs3_read(fd,buf,count), buf);
+		
 		//memcpy(des,source,count);
+		memcpy(buf,buffer,count);  //swth
+			
+		if(count + tfile.position > tfile.length){
+			//count = length + position
+			count = tfile.length + tfile.position;
+		}else{
+			//position + count 
+			tfile.position = tfile.position + count;
+		}
+		
+
+		
+		/*
 		while (tfile.length < count){
 			tfile.length += count;
-			memcpy(buffer,buf,count); //question**********
+			 //question**********
 			tfile.position += count;
-		}
+		}*/
+		//deconstruct_fs3_cmdblock(cmdblock, FS3_OP_RDSECT,sec,trk,ret);
+		//deconstruct_fs3_cmdblock(cmdblock, FS3_OP_TSEEK,sec,trk,ret);
 		return(count);
 	}
 	
@@ -200,17 +223,26 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 	}else{
 		uint16_t sec = 0;  //sec?
 		uint32_t trk = 0;
+		uint32_t track = 0;
 		uint8_t ret = 0;
 	
 		char buffer[1024];
 		 //question
-		FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-		fs3_syscall(fs3_seek(fd,count), buf);
-		fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret), buf); //?
-		while(tfile.length < count){
+		//FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+		////fs3_syscall(fs3_seek(fd,count), buf);
+		//fs3_syscall(fs3_read(fd,buf,count), buf);
+		fs3_syscall(construct_fs3_cmdblock(FS3_OP_TSEEK,sec,track,ret), NULL);
+		fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), buffer); 
+		memcpy(&buffer[tfile.position],buf,count);
+		fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret), buffer); //?
+		update position
+		length
+		/*while(tfile.length < count){
 			tfile.length += count;
-			memcpy(buffer,buf,count);
-		}
+			
+		}*/
+		//deconstruct_fs3_cmdblock(cmdblock,FS3_OP_RDSECT,sec,trk,ret);
+		//deconstruct_fs3_cmdblock(cmdblock,FS3_OP_TSEEK,sec,trk,ret);
 		return count;
 		//while loop
 		//return # of bytes
@@ -228,11 +260,11 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 
 int32_t fs3_seek(int16_t fd, uint32_t loc) {
 	//change the position of file
-	uint16_t sec = 0;
-	uint32_t trk = 23;
-	uint8_t ret = 0;
-	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_TSEEK,sec,trk,ret), NULL);
+	//uint16_t sec = 0;
+	//uint32_t trk = 23;
+	//uint8_t ret = 0;
+	//FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+	//fs3_syscall(construct_fs3_cmdblock(FS3_OP_TSEEK,sec,trk,ret), NULL);
 	if((loc > tfile.length)||(tfile.handler != 1)||(tfile.fileOpen == 0)){
 		//failed, bc/ no mis-match file handler, file closed, length less than offsets
 		return -1;
