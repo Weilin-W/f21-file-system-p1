@@ -29,6 +29,7 @@ typedef struct TFiles{
 	int fileOpen;
 	int handler;
 	int position;
+	int mountDisk;
 }TFiles;
 //File array with sector 64 and track 1024
 TFiles farray[64][1024];
@@ -63,10 +64,17 @@ int32_t fs3_mount_disk(void) {
 	uint16_t sec = 0;
 	uint_fast32_t trk = 0;
 	uint8_t ret = 0;
-	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret), NULL);
-	tfile.fileOpen = 0; //file at closed state
-	tfile.position = 0;
+	tfile.mountDisk = 0;
+	if(tfile.mountDisk >= 1){
+		return -1;
+	}else{
+		FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+		fs3_syscall(construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret), NULL);
+		tfile.fileOpen = 0; //file at closed state
+		tfile.position = 0;
+	}
+	tfile.mountDisk += 1;
+	
 
 	/*printf("Break line----------");    ATTENTION: Checker for if deconstruct equals 0
 	if(deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock,uint8_t FS3_OP_MOUNT,uint16_t sec,uint32_t trk, uint8_t ret) == 0){
@@ -108,36 +116,6 @@ int16_t fs3_open(char *path) {
 		choose sectors and files
 
 		int handle "Use handle to pass info"
-	}*/
-	/*
-	tfile Tfile;
-	for(int i = 0; i < FS3_MAX_TRACKS-1; i++){
-		for (int j = 0; j < FS3_SECTOR_SIZE; j++){
-			if(tfile farray[i][j] == -1){
-				//fs3_open("assign2/penn-state.txt");
-				Tfile.trk = 0;
-				Tfile.sect = 0;
-				Tfile.length = 0;
-			}
-			else{
-				Tfile.fileOpen = 1; //Boolean of open
-				Tfile.trk = 0;
-				Tfile.sect = 0;
-			}
-		}
-	}
-	typedef struct TFiles{
-	char fname;
-	int length;
-	int trk;
-	int sect;
-	int fileOpen;
-	int handler;
-}
-	*/
-	/*int filepath = path;
-	if(filepath = NULL){
-		tfile.length = 0;
 	}*/
 	if (tfile.fileOpen == 1){
 		return(-1);
@@ -186,13 +164,15 @@ int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
 	uint16_t sec = 0; //read sect?
 	uint32_t trk = 0;
 	uint8_t ret = 0;
+
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), *buf);
-	fs3_syscall(fs3_seek(fd,count), *buf);
+	fs3_syscall(fs3_seek(fd,count), buf);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), buf);
+	
 	char buffer[1024];
 	//memcpy(des,source,count);
-	memcpy(buffer,*buf,count); //question**********
-	return(count); //return? python [0:Count] to C return count
+	memcpy(buffer,buf,count); //question**********
+	return(count);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -212,10 +192,11 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 	uint8_t ret = 0;
 	
 	char buffer[1024];
-	memcpy(buffer,*buf,count); //question
+
+	memcpy(buffer,buf,count); //question
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret), NULL); //?
-	fs3_syscall(fs3_seek(fd,count), *buf);
+	fs3_syscall(fs3_seek(fd,count), buf);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret), buf); //?
 	return count;
 	//while loop
 	//return # of bytes
@@ -233,7 +214,7 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 int32_t fs3_seek(int16_t fd, uint32_t loc) {
 	//change the position of file
 	uint16_t sec = 0;
-	uint32_t trk = 0;
+	uint32_t trk = 23;
 	uint8_t ret = 0;
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
 	fs3_syscall(construct_fs3_cmdblock(FS3_OP_TSEEK,sec,trk,ret), NULL);
