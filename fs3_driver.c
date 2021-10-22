@@ -187,11 +187,12 @@ int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
 	uint32_t trk = 0;
 	uint8_t ret = 0;
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), NULL); //buffer, why null?
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), *buf);
+	fs3_syscall(fs3_seek(fd,count), *buf);
 	char buffer[1024];
 	//memcpy(des,source,count);
-	memcpy(buffer,buf,count); //question**********
-	return(sizeof(buffer)); //return? python [0:Count] to C
+	memcpy(buffer,*buf,count); //question**********
+	return(count); //return? python [0:Count] to C return count
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -211,15 +212,12 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 	uint8_t ret = 0;
 	
 	char buffer[1024];
-	memcpy(buffer,buf,count); //question
+	memcpy(buffer,*buf,count); //question
 	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret),NULL); //?
-	if(tfile.length == count){
-		return count;
-	}
-	else{
-		return -1;
-	}
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret), NULL); //?
+	fs3_syscall(fs3_seek(fd,count), *buf);
+	return count;
+	//while loop
 	//return # of bytes
 }
 
@@ -234,6 +232,19 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 
 int32_t fs3_seek(int16_t fd, uint32_t loc) {
 	//change the position of file
-
-	return (0);
+	uint16_t sec = 0;
+	uint32_t trk = 0;
+	uint8_t ret = 0;
+	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_TSEEK,sec,trk,ret), NULL);
+	if((loc > tfile.length)||(tfile.handler != 1)||(tfile.fileOpen == 0)){
+		//failed, bc/ no mis-match file handler, file closed, length less than offsets
+		return -1;
+	}
+	else{
+		//set position to the offset
+		tfile.position = loc;
+		//Successful
+		return(0);
+	}
 }
