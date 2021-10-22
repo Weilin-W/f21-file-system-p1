@@ -29,7 +29,7 @@ typedef struct TFiles{
 	int fileOpen;
 	int handler;
 	int position;
-	int mountDisk;
+	//int mountDisk;
 }TFiles;
 //File array with sector 64 and track 1024
 TFiles farray[64][1024];
@@ -65,23 +65,19 @@ int32_t fs3_mount_disk(void) {
 	uint16_t sec = 0;
 	uint_fast32_t trk = 0;
 	uint8_t ret = 0;
-	tfile.mountDisk = 0;
-	if(tfile.mountDisk >= 1){
-		return -1;
-	}else{
-		construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret);
-		FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-		tfile.fileOpen = 0; //file at closed state
-		tfile.position = 0;
-	}
-	tfile.mountDisk = 1;
+	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+	construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret);
+	tfile.fileOpen = 0; //file at closed state
+	tfile.position = 0;
+		//tfile.mountDisk = 1;
+	return(0);
 	
 
 	/*printf("Break line----------");    ATTENTION: Checker for if deconstruct equals 0
 	if(deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock,uint8_t FS3_OP_MOUNT,uint16_t sec,uint32_t trk, uint8_t ret) == 0){
 		return(0);
 	}*/
-	return(0);
+	
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +92,7 @@ int32_t fs3_unmount_disk(void) {
 	uint16_t sec = 0;
 	uint32_t trk = 0;
 	uint8_t ret = 0;
-	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, NULL);
+	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
 	fs3_syscall(construct_fs3_cmdblock(FS3_OP_UMOUNT,sec,trk,ret), NULL);
 
 	return(0);
@@ -185,7 +181,8 @@ int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
 			
 		if(count + tfile.position > tfile.length){
 			//count = length + position
-			count = tfile.length + tfile.position;
+			count = tfile.length - tfile.position;
+			tfile.position = tfile.length;
 		}else{
 			//position + count 
 			tfile.position = tfile.position + count;
@@ -235,12 +232,25 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 		fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), buffer); 
 		memcpy(&buffer[tfile.position],buf,count);
 		fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret), buffer); //?
-		update position
-		length
-		/*while(tfile.length < count){
-			tfile.length += count;
-			
-		}*/
+		//update position
+
+		// count + position > length
+			// pos = pos + count
+			//length = posit
+		//under: pos + count < length
+			//posit = post + count
+		// pos+count = length
+			//pos = length
+		if(count + tfile.position > tfile.length){
+			tfile.position = tfile.position + count;
+			tfile.length = tfile.position;
+		}else if(tfile.position + count < tfile.length){
+			tfile.position = tfile.position + count;
+
+		}else{
+			//position + count 
+			tfile.position = tfile.length;
+		}
 		//deconstruct_fs3_cmdblock(cmdblock,FS3_OP_RDSECT,sec,trk,ret);
 		//deconstruct_fs3_cmdblock(cmdblock,FS3_OP_TSEEK,sec,trk,ret);
 		return count;
