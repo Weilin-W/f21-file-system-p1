@@ -65,8 +65,8 @@ int32_t fs3_mount_disk(void) {
 	uint16_t sec = 0;
 	uint_fast32_t trk = 0;
 	uint8_t ret = 0;
-	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret);
+	//S3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+	fs3_syscall(construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret),NULL);
 	tfile.fileOpen = 0; //file at closed state
 	tfile.position = 0;
 		//tfile.mountDisk = 1;
@@ -180,7 +180,7 @@ int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
 		memcpy(buf,buffer,count);  //swth
 			
 		if(count + tfile.position > tfile.length){
-			//count = length + position
+			//count = length - position
 			count = tfile.length - tfile.position;
 			tfile.position = tfile.length;
 		}else{
