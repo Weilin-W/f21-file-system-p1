@@ -57,7 +57,7 @@ int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uin
 	*ret = 0x1 & (cmdblock >> 11); // masking by 1 and shifts back
 	return *ret;
 }
-
+int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uint32_t *trk, uint8_t *ret);
 ////////////////////////////////////////////////////////////////////////////////
 //
 // Function     : fs3_mount_disk
@@ -223,7 +223,6 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 		fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret), buffer);
 		
 
-		
 		//update position and length
 		// count + position > length
 			// pos = pos + count
