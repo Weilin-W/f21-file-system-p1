@@ -34,6 +34,7 @@ typedef struct TFiles{
 //File array with sector 64 and track 1024
 TFiles farray[64][1024];
 TFiles tfile;
+int mountDisk = 0;
 //
 // Implementation
 
@@ -67,15 +68,28 @@ int deconstruct_fs3_cmdblock(FS3CmdBlk cmdblock, uint8_t *op, uint16_t *sec, uin
 // Outputs      : 0 if successful, -1 if failure
 
 int32_t fs3_mount_disk(void) {
-	uint16_t sec = 0;
-	uint_fast32_t trk = 0;
-	uint8_t ret = 0;
-	//calling construct function for a cmdblock and set op code to Mount value with no buffer pointer
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret),NULL);
-	tfile.fileOpen = 0; //file at closed state
-	tfile.position = 0; //file position at 0
-	return(0);
-	
+	if (mountDisk == 1){
+		return(-1);
+	}else{
+		uint16_t sec = 0;
+		uint_fast32_t trk = 0;
+		uint8_t ret = 0;
+		uint8_t op = FS3_OP_MOUNT;
+		uint32_t track = trk;
+		uint64_t cmdblockMT = construct_fs3_cmdblock(FS3_OP_MOUNT,sec,trk,ret);
+		//calling construct function for a cmdblock and set op code to Mount value with no buffer pointer
+		fs3_syscall(cmdblockMT,NULL);
+		if (deconstruct_fs3_cmdblock(cmdblockMT,&op,&sec,&track,&ret) != 0){
+			if(ret != 0){
+				return(-1);
+			}
+			return(-1);
+		}
+		tfile.fileOpen = 0; //file at closed state
+		tfile.position = 0; //file position at 0
+		mountDisk = 1; //mount disk
+		return(0);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -90,9 +104,17 @@ int32_t fs3_unmount_disk(void) {
 	uint16_t sec = 0;
 	uint32_t trk = 0;
 	uint8_t ret = 0;
+	uint8_t op = FS3_OP_UMOUNT;
 	//Construct unmount disk based on construct a cmdblock by op code of umount
-	FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
-	fs3_syscall(construct_fs3_cmdblock(FS3_OP_UMOUNT,sec,trk,ret), NULL);
+	//FS3CmdBlk fs3_syscall(FS3CmdBlk cmdblock, void *buf);
+	uint64_t cmdblockUMT = construct_fs3_cmdblock(FS3_OP_UMOUNT,sec,trk,ret);
+	fs3_syscall(cmdblockUMT, NULL);
+	if (deconstruct_fs3_cmdblock(cmdblockUMT,&op,&sec,&trk,&ret) != 0){
+		if(ret != 0){
+			return(-1);
+		}
+		return(-1);
+	}
 
 	return(0);
 }
@@ -162,16 +184,33 @@ int32_t fs3_read(int16_t fd, void *buf, int32_t count) {
 		uint32_t trk = 0;
 		uint32_t track = 23;
 		uint8_t ret = 0;
-
+		//implement OP codes
+		uint8_t opTS = FS3_OP_TSEEK;
+		uint8_t opRD = FS3_OP_RDSECT;
 		//temp buffer array
 		char buffer[1024];
-		
-
+		//deconstruct command blocks
+		uint64_t cmdblockTS = construct_fs3_cmdblock(FS3_OP_TSEEK,sec,track,ret);
+		uint64_t cmdblockRD = construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret);
 		//call tseek, no access to buffer
 		//read by using buffer pointer
-		fs3_syscall(construct_fs3_cmdblock(FS3_OP_TSEEK,sec,track,ret), NULL);
-		fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), buffer);
+		fs3_syscall(cmdblockTS, NULL);
+		fs3_syscall(cmdblockRD, buffer);
 		
+		//deconstruction:
+		if (deconstruct_fs3_cmdblock(cmdblockTS,&opTS,&sec,&track,&ret) != 0){
+			if(ret != 0){
+				return(-1);
+			}
+			return(-1);
+		}
+		if (deconstruct_fs3_cmdblock(cmdblockRD,&opRD,&sec,&trk,&ret) != 0){
+			if(ret != 0){
+				return(-1);
+			}
+			return(-1);
+		}
+
 		//memcpy(destination,source,count);
 		//put buffer into buf pointer, by # of count
 		memcpy(buf,buffer,count);
@@ -211,17 +250,40 @@ int32_t fs3_write(int16_t fd, void *buf, int32_t count) {
 		uint32_t trk = 0;
 		uint32_t track = 0;
 		uint8_t ret = 0;
-
+		//implement op code and cmdblock
+		uint8_t opTSw = FS3_OP_TSEEK;
+		uint8_t opRDw = FS3_OP_RDSECT;
+		uint8_t opWRw = FS3_OP_WRSECT;
+		uint64_t cmdblockTSw = construct_fs3_cmdblock(FS3_OP_TSEEK,sec,track,ret);
+		uint64_t cmdblockRDw = construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret);
+		uint64_t cmdblockWRw = construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret);
 		//create a temp array for buffer
 		char buffer[1024];
 		
-		//Call tseek, read, write, based on the OP code set to
-		fs3_syscall(construct_fs3_cmdblock(FS3_OP_TSEEK,sec,track,ret), NULL);
-		fs3_syscall(construct_fs3_cmdblock(FS3_OP_RDSECT,sec,trk,ret), buffer);
+		//Call tseek, read, write, based on the OP code set to and check deconstruct return value
+		fs3_syscall(cmdblockTSw, NULL);
+		if (deconstruct_fs3_cmdblock(cmdblockTSw,&opTSw,&sec,&track,&ret) != 0){
+			if(ret != 0){
+				return(-1);
+			}
+			return(-1);
+		}
+		fs3_syscall(cmdblockRDw, buffer);
+		if (deconstruct_fs3_cmdblock(cmdblockRDw,&opRDw,&sec,&trk,&ret) != 0){
+			if(ret != 0){
+				return(-1);
+			}
+			return(-1);
+		}
 		//using memcpy putting buf into buffer array at position by count
 		memcpy(&buffer[tfile.position],buf,count);
-		fs3_syscall(construct_fs3_cmdblock(FS3_OP_WRSECT,sec,trk,ret), buffer);
-		
+		fs3_syscall(cmdblockWRw, buffer);
+		if (deconstruct_fs3_cmdblock(cmdblockWRw,&opWRw,&sec,&trk,&ret) != 0){
+			if(ret != 0){
+				return(-1);
+			}
+			return(-1);
+		}
 
 		//update position and length
 		// count + position > length
